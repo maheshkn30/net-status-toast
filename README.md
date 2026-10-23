@@ -25,7 +25,6 @@ import startNetworkToast from "net-status-toast";
 
 const monitor = startNetworkToast();
 
-
 That's it! The library starts monitoring the connection and displays notifications when relevant network conditions change.
 
 The returned monitor provides methods to retrieve the latest status, run an immediate check, and stop monitoring.
@@ -48,6 +47,7 @@ monitor.stop();
 You can use the library in a regular HTML file without a bundler.
 
 HTML
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -83,22 +83,22 @@ import { useEffect } from "react";
 import startNetworkToast from "net-status-toast";
 
 export default function App() {
-  useEffect(() => {
-    const monitor = startNetworkToast({
-      position: "bottom-center",
-      onChange: (status) => {
-        console.log("Online:", status.online);
-        console.log("Speed:", status.speedMbps);
-        console.log("Quality:", status.quality);
-      }
-    });
+useEffect(() => {
+const monitor = startNetworkToast({
+position: "bottom-center",
+onChange: (status) => {
+console.log("Online:", status.online);
+console.log("Speed:", status.speedMbps);
+console.log("Quality:", status.quality);
+}
+});
 
     return () => monitor.stop();
-  }, []);
 
-  return <main>My Application</main>;
+}, []);
+
+return <main>My Application</main>;
 }
-
 
 Next.js: Use the library inside a Client Component and initialize it in useEffect. Importing the package on the server is safe.
 
@@ -133,25 +133,25 @@ Initialize monitoring in ngOnInit and clean it up in ngOnDestroy.
 
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import startNetworkToast, {
-  NetworkToastHandle
+NetworkToastHandle
 } from "net-status-toast";
 
 @Component({
-  selector: "app-root",
-  template: "<main>My Application</main>"
+selector: "app-root",
+template: "<main>My Application</main>"
 })
 export class AppComponent implements OnInit, OnDestroy {
-  private monitor?: NetworkToastHandle;
+private monitor?: NetworkToastHandle;
 
-  ngOnInit(): void {
-    this.monitor = startNetworkToast({
-      position: "bottom-center"
-    });
-  }
+ngOnInit(): void {
+this.monitor = startNetworkToast({
+position: "bottom-center"
+});
+}
 
-  ngOnDestroy(): void {
-    this.monitor?.stop();
-  }
+ngOnDestroy(): void {
+this.monitor?.stop();
+}
 }
 
 📚 API Reference
@@ -162,10 +162,10 @@ Starts a new network monitor and returns a NetworkToastHandle. This function is 
 startNetworkToast(options?: NetworkToastOptions): NetworkToastHandle;
 
 Monitor methods
-Method	Return type	Description
-getStatus()	NetworkStatus	Returns a snapshot of the latest network status.
-checkNow()	Promise<NetworkStatus>	Runs an immediate check. Queues a follow-up check if another is running. Never rejects.
-stop()	void	Stops monitoring, clears timers and event listeners, aborts active requests, and removes the toast. Safe to call more than once.
+Method Return type Description
+getStatus() NetworkStatus Returns a snapshot of the latest network status.
+checkNow() Promise<NetworkStatus> Runs an immediate check. Queues a follow-up check if another is running. Never rejects.
+stop() void Stops monitoring, clears timers and event listeners, aborts active requests, and removes the toast. Safe to call more than once.
 
 Each invocation creates its own monitor and toast. Call stop() when the monitor is no longer needed.
 
@@ -173,18 +173,18 @@ Configuration options
 
 All options are optional. Invalid values fall back to their defaults.
 
-Option	Type	Default	Description
-pingUrl	string	https://www.gstatic.com/generate_204	Endpoint used to check internet reachability and measure latency.
-speedUrl	string	https://speed.cloudflare.com/__down?bytes=500000	Resource downloaded to measure speed. Must support CORS.
-checkInterval	number	5000	Interval between connectivity checks, in milliseconds.
-speedInterval	number	30000	Interval between speed tests, in milliseconds. A test also runs after connectivity is restored.
-timeout	number	5000	Timeout for a ping or speed test, in milliseconds.
-slowThresholdMbps	number	1	Speeds below this threshold trigger the slow-connection notification. Set to 0 to disable it.
-position	string	"bottom-center"	Toast placement. See supported values below.
-showSpeed	boolean	true	Shows the measured speed and quality in online and slow notifications.
-zIndex	number	99999	CSS stacking order of the toast.
-messages	object	See below	Custom messages for offline, online, and slow connection states.
-onChange	(status) => void	None	Callback invoked after the initial check and whenever connectivity changes.
+Option Type Default Description
+pingUrl string https://www.gstatic.com/generate_204 Endpoint used to check internet reachability and measure latency.
+speedUrl string https://speed.cloudflare.com/__down?bytes=500000 Resource downloaded to measure speed. Must support CORS.
+checkInterval number 5000 Interval between connectivity checks, in milliseconds.
+speedInterval number 30000 Interval between speed tests, in milliseconds. A test also runs after connectivity is restored.
+timeout number 5000 Timeout for a ping or speed test, in milliseconds.
+slowThresholdMbps number 1 Speeds below this threshold trigger the slow-connection notification. Set to 0 to disable it.
+position string "bottom-center" Toast placement. See supported values below.
+showSpeed boolean true Shows the measured speed and quality in online and slow notifications.
+zIndex number 99999 CSS stacking order of the toast.
+messages object See below Custom messages for offline, online, and slow connection states.
+onChange (status) => void None Callback invoked after the initial check and whenever connectivity changes.
 Toast positions
 
 Supported values:
@@ -199,11 +199,11 @@ Supported values:
 Example:
 
 const monitor = startNetworkToast({
-  position: "top-right",
-  checkInterval: 5000,
-  speedInterval: 30000,
-  slowThresholdMbps: 1,
-  showSpeed: true
+position: "top-right",
+checkInterval: 5000,
+speedInterval: 30000,
+slowThresholdMbps: 1,
+showSpeed: true
 });
 
 Custom messages
@@ -211,22 +211,20 @@ Custom messages
 Default messages:
 
 {
-  offline: "No internet connection",
-  online: "Back online",
-  slow: "Slow connection"
+offline: "No internet connection",
+online: "Back online",
+slow: "Slow connection"
 }
-
 
 Customize them using the messages option:
 
 const monitor = startNetworkToast({
-  messages: {
-    offline: "You're currently offline",
-    online: "Your connection has been restored",
-    slow: "Your internet connection is slow"
-  }
+messages: {
+offline: "You're currently offline",
+online: "Your connection has been restored",
+slow: "Your internet connection is slow"
+}
 });
-
 
 When enabled, the measured speed and quality are appended to online and slow notifications.
 
@@ -236,41 +234,41 @@ Returns a quality classification for a download speed in Mbps.
 
 import { getQuality } from "net-status-toast";
 
-console.log(getQuality(15));  // "excellent"
+console.log(getQuality(15)); // "excellent"
 console.log(getQuality(7.2)); // "good"
 console.log(getQuality(2.5)); // "fair"
 console.log(getQuality(0.5)); // "poor"
 console.log(getQuality(null)); // "unknown"
 
 Quality thresholds
-Quality	Download speed
-excellent	10 Mbps or higher
-good	5 Mbps or higher
-fair	1 Mbps or higher
-poor	Below 1 Mbps
-unknown	Not a finite number
+Quality Download speed
+excellent 10 Mbps or higher
+good 5 Mbps or higher
+fair 1 Mbps or higher
+poor Below 1 Mbps
+unknown Not a finite number
 📊 Network Status
 
 The status object is returned by getStatus() and checkNow(), and passed to the onChange callback.
 
-Property	Type	Description
-online	boolean	Whether the configured connectivity check succeeded.
-latency	number | null	Round-trip ping time in milliseconds.
-speedMbps	number | null	Measured download speed in Mbps, rounded to two decimal places.
-quality	string	Quality classification: excellent, good, fair, poor, or unknown.
-qualityLabel	string	Capitalized quality label, such as "Excellent".
-effectiveType	string | null	Browser-reported connection type, such as "4g" or "3g".
-downlink	number | null	Browser-reported estimated downlink speed in Mbps.
-rtt	number | null	Browser-reported estimated round-trip time in milliseconds.
+Property Type Description
+online boolean Whether the configured connectivity check succeeded.
+latency number | null Round-trip ping time in milliseconds.
+speedMbps number | null Measured download speed in Mbps, rounded to two decimal places.
+quality string Quality classification: excellent, good, fair, poor, or unknown.
+qualityLabel string Capitalized quality label, such as "Excellent".
+effectiveType string | null Browser-reported connection type, such as "4g" or "3g".
+downlink number | null Browser-reported estimated downlink speed in Mbps.
+rtt number | null Browser-reported estimated round-trip time in milliseconds.
 
 The effectiveType, downlink, and rtt properties depend on the Network Information API, which is not available in every browser. They are null when unavailable.
 
 🔔 Toast Behavior
-State	Appearance	Behavior
-Offline	🔴 Red	Remains visible until connectivity returns.
-Back online	🟢 Green	Automatically disappears after 3.5 seconds.
-Slow connection	🟠 Amber	Appears while the measured speed is below the configured threshold and hides when it improves.
-Normal connection	No toast	No notification is shown.
+State Appearance Behavior
+Offline 🔴 Red Remains visible until connectivity returns.
+Back online 🟢 Green Automatically disappears after 3.5 seconds.
+Slow connection 🟠 Amber Appears while the measured speed is below the configured threshold and hides when it improves.
+Normal connection No toast No notification is shown.
 
 The initial check does not display a "Back online" notification when the connection is already working.
 
