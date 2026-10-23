@@ -1,0 +1,50 @@
+{
+  "name": "net-status-toast",
+  "version": "1.0.1",
+  "description": "Zero-dependency toast that warns when the internet goes off and shows live speed and connection quality. Works with React, Vue, Angular and plain HTML, and is SSR-safe.",
+  "type": "module",
+  "main": "./index.js",
+  "module": "./index.js",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.js",
+      "default": "./index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "README.md"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "check": "node --check index.js",
+    "prepublishOnly": "npm run check"
+  },
+  "keywords": [
+    "network",
+    "network-status",
+    "offline",
+    "online",
+    "internet",
+    "connectivity",
+    "connection",
+    "connection-quality",
+    "internet-speed",
+    "speed-test",
+    "toast",
+    "notification",
+    "ssr",
+    "nextjs",
+    "react",
+    "vue",
+    "angular",
+    "vanilla-js",
+    "typescript",
+    "zero-dependencies"
+  ],
+  "license": "MIT"
+}
